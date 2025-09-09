@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Նախագիծներ 10/6 դասարան</title>
+<style>
+  /* === CSS полностью без изменений, только адаптация цвета и шрифта для школы === */
+  :root {
+    --bg-light: #f0f0f0;
+    --bg-dark: #121212;
+    --text-light: #121212;
+    --text-dark: #eee;
+    --accent-color: #00ffae;
+    --post-bg-light: #fff;
+    --post-bg-dark: #1e1e1e;
+    --button-bg-light: #00c885;
+    --button-bg-dark: #00ffae;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.light {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+  }
+  header {
+    background-color: var(--post-bg-dark);
+    color: var(--accent-color);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  body.light header {
+    background-color: var(--post-bg-light);
+    color: var(--accent-color);
+    border-bottom: 2px solid #ccc;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid var(--accent-color);
+    object-fit: cover;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  nav {
+    background-color: var(--post-bg-dark);
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
+    border-bottom: 2px solid #333;
+  }
+  body.light nav {
+    background-color: var(--post-bg-light);
+    border-bottom: 2px solid #ccc;
+  }
+  nav a {
+    margin: 0 15px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  nav a:hover {
+    color: var(--accent-color);
+  }
+  .container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  .post, .about, .contact {
+    background-color: var(--post-bg-dark);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.4);
+    transition: background-color 0.3s;
+  }
+  body.light .post, body.light .about, body.light .contact {
+    background-color: var(--post-bg-light);
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.1);
+  }
+  .post h2 {
+    margin-top: 0;
+    color: var(--accent-color);
+  }
+  .post .date {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .post img, .post video {
+    max-width: 100%;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+  .post .buttons {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  button {
+    background-color: var(--button-bg-dark);
+    border: none;
+    color: #000;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  body.light button {
+    background-color: var(--button-bg-light);
+    color: #000;
+  }
+  button:hover {
+    background-color: #00d68a;
+  }
+  input[type="text"], textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    resize: vertical;
+  }
+  input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #f00;
+    font-size: 1rem;
+  }
+  input[type="file"] {
+    margin-bottom: 10px;
+  }
+  .add-post-btn {
+    margin-bottom: 20px;
+  }
+  .hidden {
+    display: none !important;
+  }
+  .like-btn {
+    background-color: #ff4081;
+    color: white;
+  }
+  .like-btn.liked {
+    background-color: #e91e63;
+  }
+  .dislike-btn {
+    background-color: #607d8b;
+    color: white;
+  }
+  .dislike-btn.disliked {
+    background-color: #455a64;
+  }
+  #searchInput {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  .post {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
+  }
+  .comment-form {
+    margin-top: 10px;
+  }
+  .comment-input {
+    width: calc(100% - 90px);
+    padding:5px;
+    border-radius:4px;
+    border:1px solid #ccc;
+  }
+  .comment-btn {
+    padding:5px 10px;
+    margin-left:5px;
+    background-color:#00c885;
+    color:#000;
+    border:none;
+    cursor:pointer;
+  }
+  .comments p {
+    background: rgba(255,255,255,0.1);
+    padding:5px;
+    border-radius:4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .comment-delete {
+    background: none;
+    border: none;
+    color: #f55;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .delete-btn {
+    background-color: #ff5555;
+    color: white;
+  }
+  .delete-btn:hover {
+    background-color: #ff0000;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." alt="Аватар" class="avatar" />
+    <div>
+      <h1>Նախագիծներ 10/6 դասարան</h1>
+      <p>10/6 դասարանի նախագծերը և աշխատանքները</p>
+    </div>
+  </div>
+  <button id="themeToggleBtn" title="Переключить тему">🌙</button>
+</header>
+
+<nav>
+  <a href="#" data-section="posts">Գլխավոր</a>
+  <a href="#" data-section="about">Մեր մասին</a>
+  <a href="#" data-section="contact">Կապ</a>
+</nav>
+
+<div class="container">
+  <input type="text" id="searchInput" placeholder="Փնտրել նախագծերը..." />
+  <select id="categoryFilter">
+    <option value="all">Բոլոր կատեգորիաները</option>
+    <option value="Игры">Խաղեր</option>
+    <option value="Еда">Սնունդ</option>
+    <option value="Жизнь">Կենսակերպ</option>
+  </select>
+  <button class="add-post-btn" id="showAddPostFormBtn">➕ Ավելացնել նախագիծ</button>
+  <div id="addPostForm" class="hidden">
+    <input type="password" id="postPassword" placeholder="Մուտքագրել գաղտնաբառը" />
+    <input type="text" id="postTitle" placeholder="Վերնագիր" />
+    <textarea id="postContent" rows="4" placeholder="Նախագծի նկարագրությունը"></textarea>
+    <select id="postCategory">
+      <option value="" disabled selected>Ընտրել կատեգորիա</option>
+      <option value="Игры">Խաղեր</option>
+      <option value="Еда">Սնունդ</option>
+      <option value="Жизнь">Կենսակերպ</option>
+    </select>
+    <input type="file" id="postMedia" accept="image/*,video/*" />
+    <button id="addPostBtn">Ավելացնել</button>
+    <button id="cancelAddPostBtn">Չեղարկել</button>
+  </div>
+
+  <div id="posts"></div>
+
+  <div id="about" class="about hidden">
+    <h2>Մեր մասին</h2>
+    <p>Սա 10/6 դասարանի նախագծերի և աշխատանքների հավաքածուն է։ Ուսանողները կարող են տեսնել իրար աշխատանքները, գնահատել և մեկնաբանել։</p>
+  </div>
+
+  <div id="contact" class="contact hidden">
+    <h2>Կապ</h2>
+    <p>Կապ հաստատելու համար գրեք Telegram-ում: <strong>@rud_official</strong></p>
+  </div>
+</div>
+
+<footer>&copy; 2025 10/6 դասարան. Բոլոր իրավունքները պաշտպանված են.</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore-compat.js"></script>
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgGD5HJbROQfW3RRQGnSSxL2UGp7mLpVE",
+      authDomain: "rudblog-70105.firebaseapp.com",
+      projectId: "rudblog-70105",
+      storageBucket: "rudblog-70105.appspot.com",
+      messagingSenderId: "700491091501",
+      appId: "1:700491091501:web:2581cec02798e130eb72a4"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // === Остальной JS полностью сохраняется ===
+    const body = document.body;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    themeToggleBtn.onclick = () => {
+      body.classList.toggle('light');
+      localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+      themeToggleBtn.textContent = body.classList.contains('light') ? '🌙' : '☀️';
+    };
+    if (localStorage.getItem('theme') === 'light') body.classList.add('light');
+
+    const navLinks = document.querySelectorAll('nav a');
+    const sections = {
+      posts: document.getElementById('posts'),
+      about: document.getElementById('about'),
+      contact: document.getElementById('contact')
+    };
+    navLinks.forEach(link => {
+      link.onclick = e => {
+        e.preventDefault();
+        for (let key in sections) sections[key].classList.add('hidden');
+        sections[link.dataset.section].classList.remove('hidden');
+      };
+    });
+
+    const postsDiv = document.getElementById('posts');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const showAddBtn = document.getElementById('showAddPostFormBtn');
+    const form = document.getElementById('addPostForm');
+    const cancelBtn = document.getElementById('cancelAddPostBtn');
+    const addBtn = document.getElementById('addPostBtn');
+    const titleInput = document.getElementById('postTitle');
+    const contentInput = document.getElementById('postContent');
+    const mediaInput = document.getElementById('postMedia');
+    const categorySelect = document.getElementById('postCategory');
+    const passwordInput = document.getElementById('postPassword');
+
+    let posts = [];
+
+    db.collection("posts").orderBy("date", "desc").onSnapshot(snapshot => {
+      posts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      renderPosts();
+    });
+
+    function renderPosts() {
+      postsDiv.innerHTML = '';
+      const filterText = searchInput.value.toLowerCase();
+      const category = categoryFilter.value;
+
+      posts.forEach((p, i) => {
+        if ((category === 'all' || p.category === category) &&
+            (p.title.toLowerCase().includes(filterText) || p.content.toLowerCase().includes(filterText))) {
+
+          let mediaHTML = '';
+          if (p.media) {
+            mediaHTML = p.media.type.includes('image') ? `<img src="${p.media.data}">` : `<video controls src="${p.media.data}"></video>`;
+          }
+
+          const liked = localStorage.getItem(`like_${p.id}`) === 'true';
+          const disliked = localStorage.getItem(`dislike_${p.id}`) === 'true';
+
+          const commentsHTML = (p.comments || []).map((c, ci) =>
+            `<p>💬 ${c} <button class="comment-delete" data-pid="${p.id}" data-ci="${ci}">✖</button></p>`
+          ).join('');
+
+          postsDiv.insertAdjacentHTML('beforeend', `
+            <div class="post">
+              <h2>${p.title}</h2>
+              <div class="date">${p.date}</div>
+              <p>${p.content}</p>
+              ${mediaHTML}
+              <div class="buttons">
+                <button class="like-btn ${liked ? 'liked' : ''}" data-id="${p.id}">❤ ${p.likes || 0}</button>
+                <button class="dislike-btn ${disliked ? 'disliked' : ''}" data-id="${p.id}">👎 ${p.dislikes || 0}</button>
+                <button class="delete-btn" data-id="${p.id}">Удалить</button>
+              </div>
+              <div class="comment-form">
+                <input type="text" class="comment-input" placeholder="Комментарий..."/>
+                <button class="comment-btn" data-id="${p.id}">💬</button>
+              </div>
+              <div class="comments">${commentsHTML}</div>
+            </div>
+          `);
+        }
+      });
+
+      document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.onclick = () => {
+          const id = btn.dataset.id;
+          const liked = localStorage.getItem(`like_${id}`) === 'true';
+          localStorage.setItem(`like_${id}`, liked ? 'false' : 'true');
+          db.collection("posts").doc(id).update({
+            likes: firebase.firestore.FieldValue.increment(liked ? -1 : 1)
+          });
+        };
+      });
+
+      document.querySelectorAll('.dislike-btn').forEach(btn => {
+        btn.onclick = () => {
+          const id = btn.dataset.id;
+          const disliked = localStorage.getItem(`dislike_${id}`) === 'true';
+          localStorage.setItem(`dislike_${id}`, disliked ? 'false' : 'true');
+          db.collection("posts").doc(id).update({
+            dislikes: firebase.firestore.FieldValue.increment(disliked ? -1 : 1)
+          });
+        };
+      });
+
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.onclick = () => {
+          const id = btn.dataset.id;
+          const input = prompt("Введите пароль для удаления:");
+          if (input === "hayastxer") {
+            db.collection("posts").doc(id).delete();
+          } else {
+            alert("Неверный пароль");
+          }
+        };
+      });
+
+      document.querySelectorAll('.comment-btn').forEach(btn => {
+        btn.onclick = () => {
+          const id = btn.dataset.id;
+          const input = btn.previousElementSibling.value.trim();
+          if (input) {
+            const p = posts.find(x => x.id === id);
+            const newComments = [...(p.comments || []), input];
+            db.collection("posts").doc(id).update({ comments: newComments });
+          }
+        };
+      });
+
+      document.querySelectorAll('.comment-delete').forEach(btn => {
+        btn.onclick = () => {
+          const id = btn.dataset.pid;
+          const ci = parseInt(btn.dataset.ci);
+          const p = posts.find(x => x.id === id);
+          const updated = [...(p.comments || [])];
+          updated.splice(ci, 1);
+          const pass = prompt("Введите пароль для удаления комментария:");
+          if (pass === "hayastxer") {
+            db.collection("posts").doc(id).update({ comments: updated });
+          } else {
+            alert("Неверный пароль");
+          }
+        };
+      });
+    }
+
+    showAddBtn.onclick = () => form.classList.remove('hidden');
+    cancelBtn.onclick = () => {
+      form.classList.add('hidden');
+      titleInput.value = contentInput.value = '';
+      categorySelect.value = '';
+      mediaInput.value = '';
+      passwordInput.value = '';
+    };
+
+    addBtn.onclick = () => {
+      if (passwordInput.value !== "hayastxer") return alert("Неверный пароль");
+      const t = titleInput.value.trim();
+      const c = contentInput.value.trim();
+      const cat = categorySelect.value;
+      const file = mediaInput.files[0];
+
+      if (!t || !c || !cat) return alert("Заполни заголовок, текст и категорию");
+
+      const savePost = media => {
+        db.collection("posts").add({
+          title: t,
+          content: c,
+          category: cat,
+          media,
+          date: new Date().toLocaleDateString("hy-AM"),
+          likes: 0,
+          dislikes: 0,
+          comments: []
+        });
+        cancelBtn.click();
+      };
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => savePost({ data: e.target.result, type: file.type });
+        reader.readAsDataURL(file);
+      } else {
+        savePost(null);
+      }
+    };
+
+    searchInput.oninput = renderPosts;
+    categoryFilter.onchange = renderPosts;
+</script>
+</body>
+</html>
